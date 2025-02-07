@@ -6,12 +6,13 @@
     "configurations": [
 
 
+
         {
             "name": "Python Debugger: Current File",
             "type": "debugpy",
             "request": "launch",
             "program": "${file}",
-            "args": ["action.txt"],  // Add your arguments here
+            "args": ["config.txt"],  // Add your arguments here
             "console": "integratedTerminal"
         }
     ]

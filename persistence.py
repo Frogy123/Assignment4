@@ -64,8 +64,8 @@ class Repository(object):
         self.employees = Dao(Employee, self._conn)
         self.suppliers = Dao(Supplier, self._conn)
         self.products = Dao(Product, self._conn)
-        self.branches = Dao(Branche, self._conn)
-        self.activities = Dao(Activitie, self._conn)
+        self.branches = Dao(Branch, self._conn)
+        self.activities = Dao(Activity, self._conn)
         
  
     def _close(self):
