@@ -3,20 +3,26 @@ from persistence import *
 import sys
 import os
 
+
+
 def add_branche(splittedline : list[str]):
     #TODO: add the branch into the repo
+    repo.execute_command("""INSERT INTO branches(id,location, number_of_employees) VALUES(?,?,?)""", splittedline)
     pass
 
 def add_supplier(splittedline : list[str]):
     #TODO: insert the supplier into the repo
+    repo.execute_command("""INSERT INTO Suppliers(id,name,contact_information), VALUES(?,?,?)""", splittedline)
     pass
 
 def add_product(splittedline : list[str]):
     #TODO: insert product
+    repo.execute_command("""INSERT INTO Products(id, description, price, quantity), VALUES(?,?,?,?)""". splittedline)
     pass
 
 def add_employee(splittedline : list[str]):
     #TODO: insert employee
+    repo.execute_command("""INSERT INTO Employee(id, name, salary, bracnh), VALUES(?,?,?,?)""", splittedline)
     pass
 
 adders = {  "B": add_branche,
