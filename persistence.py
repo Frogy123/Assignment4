@@ -10,7 +10,7 @@ class Employee:
         self.salary = salary
         self.branche = branche
 
-    def __repr__(self):
+    def __str__(self):
         return f"Employee(id={self.id}, name='{self.name}', salary={self.salary}, branche={self.branche})"
 
 
@@ -20,8 +20,8 @@ class Supplier:
         self.name = name
         self.contact_information = contact_information
 
-    def __repr__(self):
-        return f"Supplier(id={self.id}, name='{self.name}', contact_information='{self.contact_information}')"
+    def __str__(self):
+        return []
 
 
 class Product:
@@ -31,7 +31,7 @@ class Product:
         self.price = price
         self.quantity = quantity
 
-    def __repr__(self):
+    def __str__(self):
         return f"Product(id={self.id}, description='{self.description}', price={self.price}, quantity={self.quantity})"
 
 
@@ -41,7 +41,7 @@ class Branche:
         self.location = location
         self.number_of_employees = number_of_employees
 
-    def __repr__(self):
+    def __str__(self):
         return f"Branche(id={self.id}, location='{self.location}', number_of_employees={self.number_of_employees})"
 
 
@@ -52,8 +52,8 @@ class Activitie:
         self.activator_id = activator_id
         self.date = date
 
-    def __repr__(self):
-        return f"Activitie(product_id={self.product_id}, quantity={self.quantity}, activator_id={self.activator_id}, date='{self.date}')"
+    def __str__(self):
+        return [self.date, self.activator_id, self.quantity, self.product_id].__str__()
 
 #Repository
 class Repository(object):
@@ -86,7 +86,7 @@ class Repository(object):
             );
 
             CREATE TABLE products (
-                id          INTEGER PRIMARY KEY,
+                id          INTEGER PRIMARY KEY,    
                 description TEXT    NOT NULL,
                 price       REAL NOT NULL,
                 quantity    INTEGER NOT NULL
