@@ -11,7 +11,7 @@ def main(args : list[str]):
             quantity : int = int(splittedline[1])
             activator_id : int = int(splittedline[2])
             date : str = splittedline[3]
-            product = repo.products.find(id = product_id).fetchone()[0]
+            product = repo.products.find(id = product_id)[0]
             #if sale - check if there is enough enough quantity
             if(quantity < 0 and product.quantity < abs(quantity)):
                 #not enough quantity - do nothing
