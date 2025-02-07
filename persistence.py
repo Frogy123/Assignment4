@@ -1,5 +1,7 @@
 import sqlite3
 import atexit
+
+import dbtools
 from dbtools import Dao
  
 # Data Transfer Objects:
@@ -8,10 +10,10 @@ class Employee:
         self.id = id
         self.name = name
         self.salary = salary
-        self.branche = branche
+        self.branch = branche
 
     def __str__(self):
-        return f"Employee(id={self.id}, name='{self.name}', salary={self.salary}, branche={self.branche})"
+        return str([self.name, self.salary, self.branch, self.id])
 
 
 class Supplier:
@@ -21,7 +23,7 @@ class Supplier:
         self.contact_information = contact_information
 
     def __str__(self):
-        return []
+        return str([self.name, self.contact_information, self.id])
 
 
 class Product:
@@ -32,20 +34,20 @@ class Product:
         self.quantity = quantity
 
     def __str__(self):
-        return f"Product(id={self.id}, description='{self.description}', price={self.price}, quantity={self.quantity})"
+        return str([self.description, self.price, self.quantity, self.id])
 
 
-class Branche:
+class Branch:
     def __init__(self, id: int, location: str, number_of_employees: int):
         self.id = id
         self.location = location
         self.number_of_employees = number_of_employees
 
     def __str__(self):
-        return f"Branche(id={self.id}, location='{self.location}', number_of_employees={self.number_of_employees})"
+        return str([self.location, self.number_of_employees, self.id])
 
 
-class Activitie:
+class Activity:
     def __init__(self, product_id: int, quantity: int, activator_id: int, date: str):
         self.product_id = product_id
         self.quantity = quantity
@@ -53,7 +55,7 @@ class Activitie:
         self.date = date
 
     def __str__(self):
-        return [self.date, self.activator_id, self.quantity, self.product_id].__str__()
+        return str([self.date, self.activator_id, self.quantity, self.product_id])
 
 #Repository
 class Repository(object):
@@ -62,8 +64,8 @@ class Repository(object):
         self.employees = Dao(Employee, self._conn, 'employees')
         self.suppliers = Dao(Supplier, self._conn, 'suppliers')
         self.products = Dao(Product, self._conn, 'products')
-        self.branches = Dao(Branche, self._conn, 'branches')
-        self.activities = Dao(Activitie, self._conn, 'activities')
+        self.branches = Dao(Branch, self._conn, 'branches')
+        self.activities = Dao(Activity, self._conn, 'activities')
         
  
     def _close(self):
@@ -76,7 +78,7 @@ class Repository(object):
                 id              INT         PRIMARY KEY,
                 name            TEXT        NOT NULL,
                 salary          REAL        NOT NULL,
-                branche    INT REFERENCES branches(id)
+                branch    INT REFERENCES branches(id)
             );
     
             CREATE TABLE suppliers (
@@ -104,6 +106,20 @@ class Repository(object):
                 activator_id    INTEGER NOT NULL,
                 date            TEXT    NOT NULL
             );
+        """)
+
+    def getSortedEmployees(self):
+        c = self._conn.cursor()
+        c.execute('SELECT * FROM employees ORDER BY employees.name ASC')
+        return dbtools.orm(c, Employee)
+
+    def getEmployeeSaleSalary(self):
+        return self.execute_command("""
+            SELECT Employees.name, SUM(Products.price * Activities.quantity) 
+            FROM Employees
+            JOIN Activities ON Employees.id = Activities.activator_id
+            JOIN Products ON Activities.product_id = Products.id
+            GROUP BY Employees.name
         """)
 
     def execute_command(self, script: str) -> list:
