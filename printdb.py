@@ -4,23 +4,37 @@ from persistence import *
 map()
 
 def print_activity():
-    toPrint = repo.execute_query("""SELECT Activities.date, Activities.activator_id, Activities.quantity, Activities.product_id FROM Activities """)
-    toPrint = repo.activities.find_all();
-    print("Activities:\n" + toPrint)
+    print("Activities:")
+    for activity in repo.activities.find_all():
+        print(activity)
+
 
 def print_branches():
-    toPrint = repo.execute_query("""SELECT Branches.location, Branches.number_of_employees, Branches.id FROM Branches """)
-    print("Branches:\n" + toPrint)
+    print("Branches:")
+    for branch in repo.branches.find_all():
+        print(branch)
 
 def print_employees():
-    toPrint = repo.execute_query("""SELECT Employees.name, Employees.salary, Employees.location,  Employees.id FROM Employees """)    print("Employees:\n" + toPrint)
+    print("Employees:")
+    for employee in repo.employees.find_all():
+        print(employee)
 
 def print_products():
-    toPrint = repo.execute_query("""SELECT Products.description, Products.price ,Products.quantity, Products.id FROM Products """)
-    print("Products:\n" + toPrint)
+    print("Products:")
+    for product in repo.products.find_all():
+        print(product)
+
+
 
 def print_Employees_Report():
-    pass
+    print("Employees Report:")
+    mapEmpToSales = {}
+    for row in repo.getEmployeeSaleSalary():
+        map[row[0]] = row[1]
+
+    for emp in repo.getSortedEmployees():
+        totalSalary = emp.salary + mapEmpToSales.get(emp.name)
+        print(f'{emp.name} + {totalSalary} + {emp.location}' )
 
 def main():
     #TODO: implement
