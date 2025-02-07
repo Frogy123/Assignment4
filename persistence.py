@@ -108,19 +108,23 @@ class Repository(object):
             );
         """)
 
-    def getSortedEmployees(self):
-        c = self._conn.cursor()
-        c.execute('SELECT * FROM employees ORDER BY employees.name ASC')
-        return dbtools.orm(c, Employee)
-
-    def getEmployeeSaleSalary(self):
-        return self.execute_command("""
-            SELECT Employees.name, SUM(Products.price * Activities.quantity) 
+    def getEmployeesReport(self):
+        return self.execute_command("""SELECT Employees.name, Employees.salary, branches.location, SUM(Activities.quantity)
             FROM Employees
+            JOIN branches ON Employees.branch = branches.id
             JOIN Activities ON Employees.id = Activities.activator_id
-            JOIN Products ON Activities.product_id = Products.id
-            GROUP BY Employees.name
+            ORDER BY Employees.name ASC
         """)
+
+    def getActivitiesReport(self):
+        return self.execute_command("""SELECT Activities.date, products.description,  activities.quantity, Employees.name, Suppliers.name
+        FROM Activities
+        JOIN products ON Activities.product_id = products.id
+        LEFT OUTER JOIN Employees ON Activities.activator_id = Employees.id
+        LEFT OUTER JOIN Suppliers ON Activities.activator_id = Suppliers.id
+        """)
+
+
 
     def execute_command(self, script: str) -> list:
         return self._conn.cursor().execute(script).fetchall()
