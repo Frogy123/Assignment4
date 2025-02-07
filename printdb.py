@@ -28,13 +28,13 @@ def print_products():
 
 def print_Employees_Report():
     print("Employees Report:")
-    mapEmpToSales = {}
-    for row in repo.getEmployeeSaleSalary():
-        map[row[0]] = row[1]
+    for emp in repo.getEmployeesReport():
+        print(f'{emp[0]} {emp[1]} {emp[2]} {emp[3]}')
 
-    for emp in repo.getSortedEmployees():
-        totalSalary = emp.salary + mapEmpToSales.get(emp.name)
-        print(f'{emp.name} + {totalSalary} + {emp.location}' )
+def print_Activities_Report():
+    print("Activities Report:")
+    for act in repo.getActivitiesReport():
+        print(act)
 
 def main():
     #TODO: implement
@@ -42,6 +42,9 @@ def main():
     print_branches()
     print_employees()
     print_products()
+
+    print_Employees_Report()
+    print_Activities_Report()
 
 
     pass
