@@ -17,7 +17,7 @@ def main(args : list[str]):
                 #not enough quantity - do nothing
                 continue
             else:
-                repo.activities.insert(Activity(product_id, quantity, activator_id, date))
+                repo.activities.insert(Activitie(product_id, quantity, activator_id, date))
                 repo.products.update({"quantity" : (product.quantity + quantity)}, id = product_id)
 
             

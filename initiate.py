@@ -5,9 +5,9 @@ import os
 
 
 
-def add_branch(splittedline : list[str]):
+def add_branche(splittedline : list[str]):
     #TODO: add the branch into the repo
-    repo.branches.insert(Branch(*splittedline))
+    repo.branches.insert(Branche(*splittedline))
     pass
 
 def add_supplier(splittedline : list[str]):
@@ -25,7 +25,7 @@ def add_employee(splittedline : list[str]):
     repo.employees.insert(Employee(*splittedline))
     pass
 
-adders = {  "B": add_branch,
+adders = {  "B": add_branche,
             "S": add_supplier,
             "P": add_product,
             "E": add_employee}

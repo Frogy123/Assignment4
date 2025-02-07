@@ -10,10 +10,10 @@ class Employee:
         self.id = id
         self.name = name
         self.salary = salary
-        self.branch = branche
+        self.branche = branche
 
     def __str__(self):
-        return str([self.name, self.salary, self.branch, self.id])
+        return str([self.name, self.salary, self.branche, self.id])
 
 
 class Supplier:
@@ -37,7 +37,7 @@ class Product:
         return str([self.description, self.price, self.quantity, self.id])
 
 
-class Branch:
+class Branche:
     def __init__(self, id: int, location: str, number_of_employees: int):
         self.id = id
         self.location = location
@@ -47,7 +47,7 @@ class Branch:
         return str([self.location, self.number_of_employees, self.id])
 
 
-class Activity:
+class Activitie:
     def __init__(self, product_id: int, quantity: int, activator_id: int, date: str):
         self.product_id = product_id
         self.quantity = quantity
@@ -64,23 +64,23 @@ class Repository(object):
         self.employees = Dao(Employee, self._conn)
         self.suppliers = Dao(Supplier, self._conn)
         self.products = Dao(Product, self._conn)
-        self.branches = Dao(Branch, self._conn)
-        self.activities = Dao(Activity, self._conn)
+        self.branches = Dao(Branche, self._conn)
+        self.activities = Dao(Activitie, self._conn)
         
  
     def _close(self):
         self._conn.commit()
         self._conn.close()
- 
+
     def create_tables(self):
         self._conn.executescript("""
             CREATE TABLE employees (
                 id              INT         PRIMARY KEY,
                 name            TEXT        NOT NULL,
                 salary          REAL        NOT NULL,
-                branch    INT REFERENCES branches(id)
+                branche    INT REFERENCES branches(id)
             );
-    
+
             CREATE TABLE suppliers (
                 id                   INTEGER    PRIMARY KEY,
                 name                 TEXT       NOT NULL,
@@ -88,7 +88,7 @@ class Repository(object):
             );
 
             CREATE TABLE products (
-                id          INTEGER PRIMARY KEY,    
+                id          INTEGER PRIMARY KEY,
                 description TEXT    NOT NULL,
                 price       REAL NOT NULL,
                 quantity    INTEGER NOT NULL
@@ -99,7 +99,7 @@ class Repository(object):
                 location            TEXT        NOT NULL,
                 number_of_employees INTEGER
             );
-    
+
             CREATE TABLE activities (
                 product_id      INTEGER REFERENCES products(id),
                 quantity        INTEGER NOT NULL,
@@ -111,7 +111,7 @@ class Repository(object):
     def getEmployeesReport(self):
         return self.execute_command("""SELECT Employees.name, Employees.salary, branches.location, SUM(Activities.quantity)
             FROM Employees
-            JOIN branches ON Employees.branch = branches.id
+            JOIN branches ON Employees.branche = branches.id
             JOIN Activities ON Employees.id = Activities.activator_id
             ORDER BY Employees.name ASC
         """)
