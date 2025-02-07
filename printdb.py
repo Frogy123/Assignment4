@@ -1,7 +1,7 @@
 from dbtools import row_map
 from persistence import *
 
-map()
+
 
 def print_activity():
     print("Activities:")
