@@ -47,6 +47,18 @@ class Dao(object):
         c.execute('SELECT * FROM {}'.format(self._table_name))
         return orm(c, self._dto_type)
     
+    def find_all_asc(self, sort_key):
+        c = self._conn.cursor()
+        
+        # Ensure the results are always sorted in ascending order by the chosen key
+        query = f'SELECT * FROM {self._table_name} ORDER BY {sort_key} ASC'
+    
+        c.execute(query)
+        
+        # Assuming 'orm' is a function that processes the result set
+        return orm(c, self._dto_type)
+
+
     def find(self, **keyvals):
         column_names = keyvals.keys()
         params = list(keyvals.values())

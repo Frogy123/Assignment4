@@ -13,7 +13,7 @@ class Employee:
         self.branche = branche
 
     def __str__(self):
-        return str([self.name, self.salary, self.branche, self.id])
+        return str((self.id, self.name, self.salary, self.branche))
 
 
 class Supplier:
@@ -23,7 +23,7 @@ class Supplier:
         self.contact_information = contact_information
 
     def __str__(self):
-        return str([self.name, self.contact_information, self.id])
+        return str((self.id, self.name, self.contact_information))
 
 
 class Product:
@@ -34,7 +34,7 @@ class Product:
         self.quantity = quantity
 
     def __str__(self):
-        return str([self.description, self.price, self.quantity, self.id])
+        return str((self.id, self.description, self.price, self.quantity))
 
 
 class Branche:
@@ -44,7 +44,7 @@ class Branche:
         self.number_of_employees = number_of_employees
 
     def __str__(self):
-        return str([self.location, self.number_of_employees, self.id])
+        return str((self.id, self.location, self.number_of_employees))
 
 
 class Activitie:
@@ -55,7 +55,7 @@ class Activitie:
         self.date = date
 
     def __str__(self):
-        return str([self.date, self.activator_id, self.quantity, self.product_id])
+        return str((self.product_id,  self.quantity, self.activator_id, self.date))
 
 #Repository
 class Repository(object):
