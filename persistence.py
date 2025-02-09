@@ -122,7 +122,7 @@ class Repository(object):
         JOIN products ON Activities.product_id = products.id
         LEFT OUTER JOIN Employees ON Activities.activator_id = Employees.id
         LEFT OUTER JOIN Suppliers ON Activities.activator_id = Suppliers.id
-        """)
+        ORDER BY Activities.date ASC""")
 
 
 
