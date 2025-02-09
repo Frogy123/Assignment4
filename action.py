@@ -16,6 +16,9 @@ def main(args : list[str]):
             if(quantity < 0 and product.quantity < abs(quantity)):
                 #not enough quantity - do nothing
                 continue
+            elif(quantity == 0):
+                #do nothing - illegal action
+                continue
             else:
                 repo.activities.insert(Activitie(product_id, quantity, activator_id, date))
                 repo.products.update({"quantity" : (product.quantity + quantity)}, id = product_id)
